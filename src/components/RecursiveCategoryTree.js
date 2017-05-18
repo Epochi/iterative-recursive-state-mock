@@ -1,22 +1,28 @@
 import React from 'react'
+import AddButton from './AddButton'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import {categoriesGet, addCategory} from '../actions'
 
 class RecursiveCategoryTree extends React.Component {
-    componentDidMount(){
-        this.props.dispatch(categoriesGet())
+    constructor(props){
+        super(props)
+        this.handleAddCategory = this.handleAddCategory.bind(this)
     }
-    handleAddCategory(val){
-        console.log(val)
+    componentDidMount(){
+        this.props.categoriesGet()
+    }
+    handleAddCategory(path, newCategory){
+        this.props.addCategory(path, newCategory)
+        console.log(path, newCategory)
     }
 
     
     render(){
         return(
             <div>
-                {this.props.categories.map(category => 
-                    <CategoryRecursive key={category.name} handleAddCategory={this.handleAddCategory.bind(this)} categoryData={category}/>
+                {this.props.categories.map((category,i,arr) => 
+                    <Category key={i} handleAddCategory={this.handleAddCategory} categoryData={category} path={`${i}`} />
                 )}
             </div>
             )
@@ -31,22 +37,21 @@ function mapStateToProps(state, ownProps){
 }
 
 
-export default connect(mapStateToProps)(RecursiveCategoryTree)
+export default connect(mapStateToProps,{addCategory: addCategory, categoriesGet: categoriesGet})(RecursiveCategoryTree)
 
-
-const CategoryRecursive = ({categoryData, handleAddCategory}) => {
+const Category = ({categoryData, handleAddCategory, path=""}) => {
     {if(categoryData.hasOwnProperty('children') && categoryData.children.length > 0){
         return (
             <ul>
-                <li>{categoryData.name}</li>
-                {categoryData.children.map(c => 
-                    <CategoryRecursive key={c.name} categoryData={c} />
+                <li><span>{categoryData.name}</span><AddButton path={path} handleAddCategory={handleAddCategory}/></li>
+                {categoryData.children.map((c,i,arr) => 
+                    <Category key={i} categoryData={c} handleAddCategory={handleAddCategory}  path={`${path}.${i}`}/>
                 )}
             </ul>
             )
     }else{ return(
         <ul>
-            <li>{categoryData.name}</li>
+            <li><span>{categoryData.name}</span><AddButton path={path} handleAddCategory={handleAddCategory}/></li>
         </ul>
         )
     }

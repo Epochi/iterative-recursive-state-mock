@@ -1,8 +1,6 @@
 import React from 'react'
-import data from '../data.js'
 import RecursiveCategoryTree from '../components/RecursiveCategoryTree'
 
-const categoriesArray = data;
 
 class Root extends React.Component {
     constructor(props){

@@ -4,8 +4,14 @@
         "name": "Blue",
         "children": [{
             "name": "cyan"
+        }
+        ]
+    },{
+        "name": "Green",
+        "children":[{
+            "name": "indigo"
         }]
-    }]
+        }]
 }, {
     "name": "Cars",
     "children": [{

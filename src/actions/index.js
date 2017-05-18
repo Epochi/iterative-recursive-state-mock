@@ -8,8 +8,8 @@ export const categoriesGet = () => ({
 })
 
 
-export const addCategory = (category) => ({
+export const addCategory = (path,newCategory) => ({
   type: ADD_CATEGORY,
-  category
+  data: {path,newCategory}
 })
 
