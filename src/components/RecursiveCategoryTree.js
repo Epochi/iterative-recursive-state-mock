@@ -9,9 +9,6 @@ class RecursiveCategoryTree extends React.Component {
         super(props)
         this.handleAddCategory = this.handleAddCategory.bind(this)
     }
-    componentDidMount(){
-        this.props.categoriesGet()
-    }
     handleAddCategory(path, newCategory){
         this.props.addCategory(path, newCategory)
         console.log(path, newCategory)
@@ -19,8 +16,10 @@ class RecursiveCategoryTree extends React.Component {
 
     
     render(){
+            
         return(
             <div>
+                <AddButton path={null} handleAddCategory={this.handleAddCategory}/>
                 {this.props.categories.map((category,i,arr) => 
                     <Category key={i} handleAddCategory={this.handleAddCategory} categoryData={category} path={`${i}`} />
                 )}
