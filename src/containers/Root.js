@@ -1,5 +1,6 @@
 import React from 'react'
 import data from '../data.js'
+import RecursiveCategoryTree from '../components/RecursiveCategoryTree'
 
 const categoriesArray = data;
 
@@ -22,7 +23,7 @@ class Root extends React.Component {
                 { this.state.formType === 'iterative' ?
                     <CategoryDisplayIterative/> 
                     :
-                    <CategoryDisplayRecursive/> 
+                    <RecursiveCategoryTree/> 
                     
                 }
                 
@@ -57,62 +58,31 @@ class CategoryDisplayIterative extends React.Component {
     render(){
         return(
             <div>
-                {this.state.categories.map(category => {
-                    <div></div>
-                })}
+                {this.state.categories.map(category => {return (<CategoryIterative {...category}/>)})}
             </div>
             )
     }
     
 }
-
-class CategoryDisplayRecursive extends React.Component {
-    constructor(props){
-        super(props)
-        this.state = {
-            categories: []
-        }
-    }
-    componentDidMount(){
-        console.log(data);
-        this.setState({categories: data})
-    }
-    handleAddCategory(val){
-        console.log(val)
-    }
-
+const CategoryIterative = (props) => {
+    console.log(props.children)
     
-    render(){
-        return(
-            <div>
-                {this.state.categories.map(category => 
-                    <CategoryRecursive handleAddCategory={this.handleAddCategory.bind(this)} categoryData={category}/>
-                )}
-            </div>
-            )
-    }
     
+    return(<div>
+        <div>{props.name}</div>
+        <div>{props.children.length > 0 ? props.children : null}</div>
+    </div>)
 }
-
-const CategoryRecursive = ({categoryData, handleAddCategory}) => {
-    {if(categoryData.hasOwnProperty('children') && categoryData.children.length > 0){
-        return (
-            <ul>
-                <li>{categoryData.name} <AddCategory handleAddCategory={(categoryData) => {this.props.handleAddCategory(categoryData)}}/> </li>
-                {categoryData.children.map(c => 
-                    <CategoryRecursive categoryData={c} />
-                )}
-            </ul>
-            )
-    }else{ return(
-        <ul>
-            <li>{categoryData.name} <AddCategory handleAddCategory={(categoryData) => {this.props.handleAddCategory(categoryData)}}/>  </li>
-        </ul>
-        )
-    }
-        
+/*
+ if(curr.hasOwnProperty('children')){
+	console.log('hasOwnProperty: ',curr)
+	if(curr.children.length > 0){
+		console.log('children long')
     }
 }
+ return( (curr.hasOwnProperty('children') && curr.children.length > 0) ? [...prev, curr, ...curr.children] : [...prev, curr]);
+*/
+
 
 class AddCategory extends React.Component{
     constructor(props){
