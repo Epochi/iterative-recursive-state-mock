@@ -7,11 +7,6 @@ import reducer from './reducers'
 
 const store = createStore(reducer)
 
-  /*if (module.hot) {
-    module.hot.accept('./reducers', () => {const nextReducer = reducer;store.replaceReducer(nextReducer);
-    });
-  }*/
-
 import Root from './containers/Root'
 
 const render = Component => {

@@ -46,7 +46,6 @@ class Form extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     this.props.handleAddCategory(this.props.path, this.state.value)
-    console.log('handleSubmit ',this.props.path, this.state.value)
     this.props.handleToggle()
      this.setState({value:''});
   }

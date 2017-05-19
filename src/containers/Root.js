@@ -2,7 +2,7 @@ import React from 'react'
 import RecursiveCategoryTree from '../components/RecursiveCategoryTree'
 import IterativeCategoryTree from '../components/IterativeCategoryTree'
 import { connect } from 'react-redux'
-import {categoriesGet} from '../actions'
+import {categoriesFetch} from '../actions'
 
 class Root extends React.Component {
     constructor(props){
@@ -12,7 +12,7 @@ class Root extends React.Component {
         }
     }
     componentDidMount(){
-        this.props.dispatch(categoriesGet())
+        this.props.dispatch(categoriesFetch())
     }
 
     handleClick(formType){

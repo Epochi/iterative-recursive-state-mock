@@ -3,7 +3,7 @@ export const CATEGORIES_FETCH = 'CATEGORIES_FETCH'
 export const CATEGORIES_FLAT_GET = 'CATEGORIES_FLAT_GET'
 export const ADD_CATEGORY = 'ADD_CATEGORY'
 
-export const categoriesGet = () => ({
+export const categoriesFetch = () => ({
   type: CATEGORIES_FETCH,
   data: mockData
 })

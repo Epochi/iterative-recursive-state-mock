@@ -2,7 +2,7 @@ import React from 'react'
 import AddButton from './AddButton'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import {categoriesGet, addCategory} from '../actions'
+import {addCategory} from '../actions'
 
 class RecursiveCategoryTree extends React.Component {
     constructor(props){
@@ -11,7 +11,6 @@ class RecursiveCategoryTree extends React.Component {
     }
     handleAddCategory(path, newCategory){
         this.props.addCategory(path, newCategory)
-        console.log(path, newCategory)
     }
 
     
@@ -20,8 +19,11 @@ class RecursiveCategoryTree extends React.Component {
         return(
             <div>
                 <AddButton path={null} handleAddCategory={this.handleAddCategory}/>
-                {this.props.categories.map((category,i,arr) => 
-                    <Category key={i} handleAddCategory={this.handleAddCategory} categoryData={category} path={`${i}`} />
+                {this.props.categories.length && 
+                     (
+                        this.props.categories.map((category,i,arr) => 
+                            <Category key={i} handleAddCategory={this.handleAddCategory} categoryData={category} path={`${i}`} />
+                        )
                 )}
             </div>
             )
@@ -31,12 +33,12 @@ class RecursiveCategoryTree extends React.Component {
 
 function mapStateToProps(state, ownProps){
     return {
-        categories: state.categories
+        categories: state.categories.original
     };
 }
 
 
-export default connect(mapStateToProps,{addCategory: addCategory, categoriesGet: categoriesGet})(RecursiveCategoryTree)
+export default connect(mapStateToProps,{addCategory: addCategory})(RecursiveCategoryTree)
 
 const Category = ({categoryData, handleAddCategory, path=""}) => {
     {if(categoryData.hasOwnProperty('children') && categoryData.children.length > 0){
